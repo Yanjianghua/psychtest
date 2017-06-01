@@ -1,0 +1,19 @@
+<div class="clear20"></div>
+<div id="footer">
+	<div class="f_x">
+		<div class="f_x_ul">
+			<ul>
+				<li><a href="{{formatUrl('home')}}">首页</a><span>|</span></li>
+				{{foreach $channels as $k=>$v}}
+				<li><a href="{{formatUrl('channel',$v.dir,'')}}">{{$v.name}}</a>{{if $k
+					<count($channels)}}<span>|</span>{{/if}}</li>
+				{{/foreach}}
+			</ul>
+
+		</div>
+	</div>
+	<div class="clear20"></div>
+	<p class="pp">内容来自互联网如有侵权请联系我们删除
+		<br>
+	</p>
+</div>

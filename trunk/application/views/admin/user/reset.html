@@ -1,0 +1,68 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{$id}}" />
+	<div>
+		<label>密&nbsp;&nbsp;&nbsp;码:</label>
+		<input id="password" name="password" value="" />
+	</div>
+	<div>
+		<div id="button">生成密码</div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+	function adAdd(check, button) {
+		$('#form').form({
+			url: "/Admin_User/reset/",
+			onSubmit: function() {
+				if(check() === false){
+					return false;
+				}
+				$("#window").mask();
+				return true;
+			},
+			success: function(data) {
+				data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.msg);
+				} else {
+					$("#data_table_body").datagrid("reload");
+					$("#window").window("close");
+				}
+				$("#window").unmask();
+			}
+		});
+		button();
+	}
+
+	adAdd(function() {
+		var password = $.trim($("#password").val());
+		if (password == "") {
+			alert("密码不能为空");
+			return false;
+		}
+	}, function() {
+
+		$('#password').textbox({
+			width: "30%",
+			prompt: "自动生成",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+		$("#button").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$.post("/Admin_User/create_password/", {
+
+					}, function(data) {
+						if (data.success) {
+							$("#data_table_body").datagrid("reload");
+						}
+						$("#password").textbox('setValue', data);
+					});
+		})
+	});
+</script>

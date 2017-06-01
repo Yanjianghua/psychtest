@@ -1,0 +1,63 @@
+.wrap {
+	width: 100%;
+	height: 500px;
+	position: absolute;
+	top: 50%;
+	margin-top: -250px;
+	background: #5f90d2;
+}
+.login {
+	width: 984px;
+	height: 254px;
+	margin: 0 auto;
+	position: relative;
+	top: 134px;
+	background: url(../images/dl_05.gif) no-repeat;
+}
+.logo {
+	width: 593px;
+	height: 134px;
+	background: url(../images/dl_02.gif) no-repeat;
+	position: absolute;
+	left: -78px;
+	top: -134px;
+}
+form {
+	width: 272px;
+	float: right;
+	margin: 69px 0 0 0;
+	padding: 0 34px;
+}
+label {
+	margin-bottom: 11px;
+	display: block;
+}
+label input {
+	width: 207px;
+	border: 1px solid #aac5da;
+	background: #f2f7fb;
+	height: 28px;
+	line-height: 28px;
+	vertical-align: middle;
+	outline: none;
+}
+label input.focus {
+	border: 1px solid #bab8bb;
+	background: #fdfcea;
+}
+label input.code {
+	width: 78px;
+}
+label span {
+	font-size: 14px;
+	color: #444;
+	vertical-align: middle;
+}
+.submit {
+	margin-left: 60px;
+}
+.codeimg {
+	vertical-align: middle;
+	margin-left: 12px;
+	cursor: pointer;
+}

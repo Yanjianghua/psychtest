@@ -1,0 +1,20 @@
+<div class="header">
+	<div class="time">
+		<script language="JavaScript">
+			var dayNames = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+					Stamp = new Date();
+					document.write("" + Stamp.getFullYear() + "年" + (Stamp.getMonth() + 1) + "月" + Stamp.getDate() + "日" + " " + dayNames[Stamp.getDay()] + "  " + Stamp.getHours() + ":" + Stamp.getMinutes() + "");
+		</script>
+	</div>
+	<div class="shouye"><a href="{{formatUrl('home_m')}}">首页</a></div>
+</div>
+<div class="clear"></div>
+<div class="nav">
+	<ul>
+		{{foreach $channels as $v}}
+		<li><a href="{{formatUrl('channel_m',$v.dir,'')}}">{{$v.name}}</a>
+		</li>
+		{{/foreach}}
+	</ul>
+</div>
+<div class="clear"></div>

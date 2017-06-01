@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script type="text/javascript" src="/statics/js/lib/ckeditor/ckeditor.js"></script>
+		<script type="text/javascript">
+			function checkverify() {
+				var title = $("input[name='title']").val();
+				var description = $("input[name='description']").val();
+				var pubdate = $("input[name='pubdate']").val();
+				if (CKEDITOR.instances.content.getData() == "") {
+					alert("文章正文不能为空");
+					return false;
+				}
+				if (title == '') {
+					alert('文章标题不能为空');
+					return false;
+				}
+				return true;
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div class="main">
+			<div class="easyui-panel" title="添加">
+				<form id="myform" name="form1" action="/Admin_Notice/edit/" method="post" enctype="multipart/form-data" style="padding:10px;" onsubmit="return checkverify(this)">
+					<input type="hidden" name="id" value="{{if !empty($article)}}{{$article.id}}{{/if}}" />
+					<table cellpadding="5">
+						<tr>
+							<td>标题：</td>
+							<td>
+								<input id="tit" class="easyui-textbox" style="width:400px;" type="text" name="title" value="{{if !empty($article)}}{{$article.title}}{{/if}}">
+							</td>
+						</tr>
+						<tr>
+							<td>正文：</td>
+							<td>
+								<textarea id="content" cols="20" rows="2" name="content">{{if !empty($article)}}{{$article.content}}{{/if}}</textarea>
+								<script type="text/javascript">
+									window.onload = function() {
+										CKEDITOR.replace('content', {
+											filebrowserUploadUrl: "/Admin_Notice/uploadfile/"
+										});
+									};
+								</script>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type="hidden" name="submit" value="提交" />
+								<button class="easyui-linkbutton">提交</button>
+								<a class="easyui-linkbutton" href="{{$BACK}}">返回</a>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</body>
+
+</html>

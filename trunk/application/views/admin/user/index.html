@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script src="/statics/admin/js/users/data_table_body.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/statics/admin/js/users/ad.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load', {
+					name: $('#name').val(),
+					usertype: $("#usertype").val()
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="window"></div>
+		<div class="main">
+			<div>
+				<label>
+					<input class="easyui-searchbox" id="name" style="width:200px" data-options="prompt:'请输入用户名'" /> 账户类型：
+					<select id="usertype">
+						<option value="">不限</option>
+						<option value="normal">普通用户</option>
+						<option value="inneruser">内部用户</option>
+						<option value="gooduser">重点客户</option>
+						<option value="oauser">智能OA账户</option>
+					</select>
+					<a href="javascript:FindData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+				</label>
+			</div>
+			<div id="data_table" style="float: left;">
+				<table id="data_table_body">
+
+				</table>
+			</div>
+		</div>
+	</body>
+
+</html>

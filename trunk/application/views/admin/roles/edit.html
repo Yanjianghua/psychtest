@@ -1,0 +1,28 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{if !empty($item)}}{{$item.id}}{{/if}}"/>
+	<div>
+		<label>用户组名称:</label>
+		<input id="name1" name="name" value="{{if !empty($item)}}{{$item.name}}{{/if}}" />
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+
+<script src="/statics/admin/js/admin_roles/ad.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	adAdd(function() {
+		var name1 = $.trim($("#name1").val());
+	}, function() {
+		$("#name1").textbox({
+			width: "50%",
+			prompt: "请输入用户组名",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+</script>

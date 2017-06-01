@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta content="email=no" name="format-detection" />
+		<meta charset="utf-8">
+		<title>{{$web_name}}</title>
+		{{include file='../common/importAll.html'}}
+		<link rel="stylesheet" type="text/css" href="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/m/css/wap_index.css?v={{config_item('system_version')}}">
+		<script type="text/javascript" src="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/m/js/TouchSlide.1.1.js?v={{config_item('system_version')}}"></script>
+	</head>
+
+	<body>
+		{{include file='../common/header.html'}}
+		{{if !empty($data.head.list)}}
+		<div class="toutiao">
+			<dl>
+				{{if !empty($data.head.list.0)}}<dt><a href="{{formatUrl('article_m', $data.head.list.0.dir, $data.head.list.0.id)}}">{{$data.head.list.0.title}}</a></dt>{{/if}}
+				{{if !empty($data.head.list.1)}}<dd><a href="{{formatUrl('article_m', $data.head.list.1.dir, $data.head.list.1.id)}}">[{{$data.head.list.1.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.2)}}<dd><a href="{{formatUrl('article_m', $data.head.list.2.dir, $data.head.list.2.id)}}">[{{$data.head.list.2.title}}]</a></dd>{{/if}}
+			</dl>
+			<dl>
+				{{if !empty($data.head.list.3)}}<dt><a href="{{formatUrl('article_m', $data.head.list.3.dir, $data.head.list.3.id)}}">{{$data.head.list.3.title}}</a></dt>{{/if}}
+				{{if !empty($data.head.list.4)}}<dd><a href="{{formatUrl('article_m', $data.head.list.4.dir, $data.head.list.4.id)}}">[{{$data.head.list.4.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.5)}}<dd><a href="{{formatUrl('article_m', $data.head.list.5.dir, $data.head.list.5.id)}}">[{{$data.head.list.5.title}}]</a></dd>{{/if}}
+			</dl>
+			<dl>
+				{{if !empty($data.head.list.6)}}<dt><a href="{{formatUrl('article_m', $data.head.list.6.dir, $data.head.list.6.id)}}">{{$data.head.list.6.title}}</a></dt>{{/if}}
+				{{if !empty($data.head.list.7)}}<dd><a href="{{formatUrl('article_m', $data.head.list.7.dir, $data.head.list.7.id)}}">[{{$data.head.list.7.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.8)}}<dd><a href="{{formatUrl('article_m', $data.head.list.8.dir, $data.head.list.8.id)}}">[{{$data.head.list.8.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.9)}}<dd><a href="{{formatUrl('article_m', $data.head.list.9.dir, $data.head.list.9.id)}}">[{{$data.head.list.9.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.10)}}<dd><a href="{{formatUrl('article_m', $data.head.list.10.dir, $data.head.list.10.id)}}">[{{$data.head.list.10.title}}]</a></dd>{{/if}}
+			</dl>
+			<dl>
+				{{if !empty($data.head.list.11)}}<dt><a href="{{formatUrl('article_m', $data.head.list.11.dir, $data.head.list.11.id)}}">{{$data.head.list.11.title}}</a></dt>{{/if}}
+				{{if !empty($data.head.list.12)}}<dd><a href="{{formatUrl('article_m', $data.head.list.12.dir, $data.head.list.12.id)}}">[{{$data.head.list.12.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.13)}}<dd><a href="{{formatUrl('article_m', $data.head.list.13.dir, $data.head.list.13.id)}}">[{{$data.head.list.13.title}}]</a></dd>{{/if}}
+			</dl>
+			<dl>
+				{{if !empty($data.head.list.14)}}<dt><a href="{{formatUrl('article_m', $data.head.list.14.dir, $data.head.list.14.id)}}">{{$data.head.list.14.title}}</a></dt>{{/if}}
+				{{if !empty($data.head.list.15)}}<dd><a href="{{formatUrl('article_m', $data.head.list.15.dir, $data.head.list.15.id)}}">[{{$data.head.list.15.title}}]</a></dd>{{/if}}
+				{{if !empty($data.head.list.16)}}<dd><a href="{{formatUrl('article_m', $data.head.list.16.dir, $data.head.list.16.id)}}">[{{$data.head.list.16.title}}]</a></dd>{{/if}}
+			</dl>
+		</div>
+		{{/if}}
+		{{if !empty($data.new.list)}}
+		<div class="zxyw">
+			<div class="zxyw_title">最新要闻</div>
+			<ul>
+				{{foreach $data.new.list as $k=>$v}}
+				<li><a href="{{formatUrl('article_m', $v.dir, $v.id)}}">{{$v.title}}</a></li>
+				{{/foreach}}
+			</ul>
+		</div>
+		{{/if}}
+		{{for $i=0;$i<count($data.mod);$i=$i+3}}
+		<div id="leftTabBox{{$i}}" class="mod">
+			<div class="hd">
+				<ul>
+					{{for $j=0;$j<3;$j++}}
+					<li><a href="javascript:void(0);">{{$data.mod[$i+$j].name}}</a></li>
+					{{/for}}
+				</ul>
+			</div>
+			<div class="bd">
+				{{for $j=0;$j<3;$j++}}
+				<ul>
+					{{if !empty($data.mod[$i+$j].head.list)}}
+					<div class="hd_top">
+						<a href="{{formatUrl('article_m', $data.mod[$i+$j].head.list.0.dir, $data.mod[$i+$j].head.list.0.id)}}" target="_blank"><img src="{{$data.mod[$i+$j].head.list.0.thumb}}"></a>
+						<div class="hd_top_fr">
+							<span><a href="{{formatUrl('article_m', $data.mod[$i+$j].head.list.0.dir, $data.mod[$i+$j].head.list.0.id)}}" target="_blank">{{$data.mod[$i+$j].head.list.0.title}}</a></span>
+							<p>{{cut_str($data.mod[$i+$j].head.list.0.content, 27)}}…<a href="{{formatUrl('article_m', $data.mod[$i+$j].head.list.0.dir, $data.mod[$i+$j].head.list.0.id)}}" target="_blank">[详细]</a></p>
+						</div>
+					</div>
+					{{/if}}
+					{{if !empty($data.mod[$i+$j].list.list)}}
+					{{foreach $data.mod[$i+$j].list.list as $k=>$v}}
+					<li><a href="{{formatUrl('article_m', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+					{{/foreach}}
+					{{/if}}
+					<div class="ckgd">
+						<a href="{{formatUrl('channel_m', $data.mod[$i+$j].dir, '')}}" target="_blank">查看更多</a>
+					</div>
+				</ul>
+				{{/for}}
+			</div>
+		</div>
+		<script type="text/javascript">
+			TouchSlide({
+				slideCell: "#leftTabBox{{$i}}"
+			});
+		</script>
+		{{/for}}
+		{{if !empty($data.mod.12)}}
+		<div class="mod">
+			<div class="mod_title">
+				<a href="{{formatUrl('channel_m', $data.mod.12.dir, '')}}" target="_blank">{{$data.mod.12.name}}</a>
+			</div>
+			{{if !empty($data.mod.12.list)}}
+			<div class="mod_pic">
+				<ul>
+					{{foreach $data.mod.12.list as $k=>$v}}
+					<li>
+						<a href="{{formatUrl('article_m', $v.dir, $v.id)}}" target="_blank">
+							<img src="{{$v.thumb}}">
+							<span>{{$v.title}}</span>
+						</a>
+					</li>
+					{{/foreach}}
+				</ul>
+			</div>
+			{{/if}}
+		</div>
+		{{/if}}
+		{{include file='../common/footer.html'}}
+		<div style="display: none;">
+			{{config_item('cnzz_m')}}
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,303 @@
+<style type="text/css">
+	input {
+		vertical-align: middle;
+	}
+</style>
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{$id}}" />
+	<div>
+		<input id="all" type="checkbox">
+		<label for="all">
+			全选
+		</label>
+		<input id="recommand" type="checkbox">
+		<label style="background: orange; color: #FFFFFF" for="recommand">
+			推荐
+		</label>
+		<input id="hot" type="checkbox">
+		<label style="background: red; color: #FFFFFF" for="hot">
+			热门
+		</label>
+		<input id="new" type="checkbox">
+		<label style="background: green; color: #FFFFFF" for="new">
+			最新
+		</label>
+		<input id="plain" type="checkbox">
+		<label style="background: #0099FF; color: #FFFFFF" for="plain">
+			普通
+		</label>
+		<input id="zero" type="checkbox">
+		<label style="background: blue; color: #FFFFFF" for="zero">
+			反选零收录
+		</label>
+		<input type="text" id="medianame" value="" placeholder="请输入媒体名" /> 共勾选
+		<span id="numMedia">0</span>个媒体<span id="numChannel">0</span>个栏目
+		<span id="numRecommand" style="color: orange;">推荐<b>0</b>个</span>
+		<span id="numHot" style="color: red;">热门<b>0</b>个</span>
+		<span id="numNew" style="color: green;">最新<b>0</b>个</span>
+		<span id="numPlain" style="color: #0099FF;">普通<b>0</b>个</span>
+		<span id="numZero" style="color: blue;">零收录<b>0</b>个</span>
+	</div>
+	<div id="che">
+		{{foreach $media as $k=>$v}}
+		<div>
+			<label>
+				<input idname="checkall" type="checkbox">{{$v.name}}
+			</label>
+			<br /> {{foreach $v.channel as $k1=>$v1}}
+			<label style="white-space: nowrap; margin-right: 5px;">
+				<input type="checkbox" idname="channel" name="channel[{{$v.id}}][]" value="{{$v1.id}}" {{if !empty($auth[$v.id]) && in_array($v1.id, $auth[$v.id])}} checked="checked" {{/if}} {{if isset($v1.recommand)}} recommand="1" {{/if}}{{if isset($v1.hot)}} hot="1"
+				{{/if}}{{if isset($v1.new)}} new="1" {{/if}}{{if isset($v1.zero)}} zero="1" {{/if}} {{if isset($v1.plain)}} plain="1" {{/if}}> {{$v1.name}} {{if isset($v1.recommand)}}<span style="background: orange; color: #FFFFFF">推荐</span> {{/if}} {{if isset($v1.hot)}}<span style="background: red; color: #FFFFFF">热门</span> {{/if}} {{if isset($v1.new)}}<span style="background: green; color: #FFFFFF">最新</span>{{/if}}
+				{{if isset($v1.plain)}}<span style="background: #0099FF; color: #FFFFFF;">普通</span>{{/if}}{{if isset($v1.zero)}}<span style="background: blue; color: #FFFFFF">零</span>{{/if}}
+			</label>
+			{{/foreach}}
+		</div>
+		{{/foreach}}
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+	var opt = {
+		all: $("#all").prop("checked"),
+		recommand: $("#recommand").prop("checked"),
+		hot: $("#hot").prop("checked"),
+		"new": $("#new").prop("checked"),
+		zero: $("#zero").prop("checked"),
+		plain: $("#plain").prop("checked")
+	};
+
+	function  docheck() {
+		var o = $("#che").find("input[idname=channel]");
+		if (opt.all) {
+			o.filter("[idname=channel]").prop("checked", "checked");
+		}
+		if (opt.recommand) {
+			o.filter("[recommand=1]").prop("checked", "checked");
+		}
+		if (opt.hot) {
+			o.filter("[hot=1]").prop("checked", "checked");
+		}
+		if (opt.new) {
+			o.filter("[new=1]").prop("checked", "checked");
+		}
+		if (opt.plain) {
+			o.filter("[plain=1]").prop("checked", "checked");
+		}
+		$("input[idname=checkall]").each(function() {
+			if ($(this).prop("checked")) {
+				$(this).parent().parent().find("input[idname=channel]").prop("checked", "checked");
+			}
+		});
+		if (opt.zero) {
+			o.filter("[zero=1]").prop("checked", false);
+		}
+		$("#che").children("div").each(function() {
+			var o = $(this).find("input[idname=channel]");
+			if (o.filter(":checked").size() < o.size()) {
+				o.parent().parent().find("input[idname=checkall]").prop("checked", false);
+			}
+		});
+	}
+
+	function setText() {
+		var sizeopt = {
+			media: 0,
+			channel: 0,
+			recommand: 0,
+			hot: 0,
+			"new": 0,
+			zero: 0,
+			plain: 0
+		};
+		$("#che").children("div").each(function() {
+			var o = $(this).find("input[idname=channel]");
+			if (o.filter(":checked").size() > 0) {
+				sizeopt.channel += o.filter(":checked").size();
+				sizeopt.media += 1;
+			}
+			sizeopt.recommand += o.filter("[recommand=1]:checked").size();
+			sizeopt.hot += o.filter("[hot=1]:checked").size();
+			sizeopt.new += o.filter("[new=1]:checked").size();
+			sizeopt.zero += o.filter("[zero=1]:checked").size();
+			sizeopt.plain += o.filter("[plain=1]:checked").size();
+		});
+		$("#numMedia").text(sizeopt.media);
+		$("#numChannel").text(sizeopt.channel);
+		$("#numRecommand").children("b").text(sizeopt.recommand);
+		$("#numHot").children("b").text(sizeopt.hot);
+		$("#numNew").children("b").text(sizeopt.new);
+		$("#numZero").children("b").text(sizeopt.zero);
+		$("#numPlain").children("b").text(sizeopt.plain);
+	}
+
+	function adAdd(check, button) {
+		$('#form').form({
+			url: "/Admin_User/media/",
+			onSubmit: function() {
+				if (check() === false) {
+					return false;
+				}
+				$("#window").mask();
+				return true;
+			},
+			success: function(data) {
+				data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.msg);
+				} else {
+					$("#data_table_body").datagrid("reload");
+					$("#window").window("close");
+				}
+				$("#window").unmask();
+			}
+		});
+		button();
+	}
+
+	function init() {
+		var size = $("#che").children("div").size();
+		var sizeopt = {
+			all: 0,
+			recommand: 0,
+			hot: 0,
+			"new": 0,
+			zero: 0,
+			plain: 0
+		};
+		//
+		$("#che").children("div").each(function() {
+			var o = $(this).find("input[idname=channel]");
+			sizeopt.all += o.filter(":checked").size();
+			sizeopt.recommand += o.filter("[recommand=1]:checked").size();
+			sizeopt.hot += o.filter("[hot=1]:checked").size();
+			sizeopt.new += o.filter("[new=1]:checked").size();
+			sizeopt.zero += o.filter("[zero=1]:checked").size();
+			sizeopt.plain += o.filter("[plain=1]:checked").size();
+			if (o.filter(":checked").size() == o.size()) {
+				o.parent().parent().find("input[idname=checkall]").prop("checked", "checked");
+			}
+		});
+		if (sizeopt.all > 0 && sizeopt.all == $("#che input[idname=channel]").size()) {
+			$("#all").prop("checked", "checked");
+		} else {
+			$("#all").prop("checked", false);
+		}
+		if (sizeopt.recommand > 0 && sizeopt.recommand == $("#che input[recommand=1]").size()) {
+			$("#recommand").prop("checked", "checked");
+		} else {
+			$("#recommand").prop("checked", false);
+		}
+		if (sizeopt.hot > 0 && sizeopt.hot == $("#che input[hot=1]").size()) {
+			$("#hot").prop("checked", "checked");
+		} else {
+			$("#hot").prop("checked", false);
+		}
+		if (sizeopt.new > 0 && sizeopt.new == $("#che input[new=1]").size()) {
+			$("#new").prop("checked", "checked");
+		} else {
+			$("#new").prop("checked", false);
+		}
+		if (sizeopt.plain > 0 && sizeopt.plain == $("#che input[plain=1]").size()) {
+			$("#plain").prop("checked", "checked");
+		} else {
+			$("#plain").prop("checked", false);
+		}
+		if (sizeopt.zero == 0) {
+			$("#zero").prop("checked", "checked");
+		} else {
+			$("#zero").prop("checked", false);
+		}
+
+		opt = {
+			all: $("#all").prop("checked"),
+			recommand: $("#recommand").prop("checked"),
+			hot: $("#hot").prop("checked"),
+			"new": $("#new").prop("checked"),
+			zero: $("#zero").prop("checked"),
+			plain: $("#plain").prop("checked")
+		};
+	}
+	$(function() {
+		init();
+		setText();
+		//全部选择
+		var lastvalue = "";
+		$("#medianame").keyup(function() {
+			if ($.trim($(this).val()) != lastvalue) {
+				lastvalue = $(this).val();
+				$("#che").children("div").each(function() {
+					var o = $(this).find("label:eq(0)");
+					o = $.trim(o.text());
+					if (o.match(new RegExp(lastvalue))) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			}
+		});
+		$("#all,#recommand,#hot,#new,#zero,#plain").change(function() {
+			if ($(this).prop("checked")) {
+				opt[$(this).attr("id")] = true;
+				if ($(this).attr("id") != "zero") {
+					$("#che").find("input[" + $(this).attr("id") + "=1]").prop("checked", false);
+				}
+				docheck();
+				init();
+			} else {
+				opt[$(this).attr("id")] = false;
+				if ($(this).attr("id") == "all") {
+					$("#che").find("input[idname=checkall]").prop("checked", false);
+				} else {
+					if ($(this).attr("id") != "zero") {
+						$("#che").find("input[" + $(this).attr("id") + "=1]").prop("checked", false);
+					}
+					if (!opt.all) {
+						$("#che").children("div").each(function() {
+							var o = $(this);
+							$(this).find("input[idname=channel]").each(function() {
+								if (!$(this).prop("checked")) {
+									o.find("input[idname=checkall]").prop("checked", false);
+								}
+							});
+						});
+					}
+				}
+				docheck();
+			}
+			setText();
+		});
+		//媒体全部选择
+		$("input[idname=checkall]").change(function() {
+			$("#che").find("input[idname=channel]").prop("checked", false);
+			if (!$(this).prop("checked")) {
+				init();
+				docheck();
+			} else {
+				docheck();
+				init();
+			}
+			setText();
+		});
+		$("input[idname=channel]").change(function() {
+			if (!$(this).prop("checked")) {
+				$(this).parent().parent().find("input[idname=checkall]").prop("checked", false);
+				init();
+				docheck();
+			} else {
+				init();
+				docheck();
+			}
+			setText();
+		});
+		adAdd(function() {}, function() {
+			$("#submit").linkbutton({
+				iconCls: 'icon-ok'
+			}).click(function() {
+				$('#form').submit();
+			});
+		});
+	});
+</script>

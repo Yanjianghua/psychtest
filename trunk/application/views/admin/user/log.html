@@ -1,0 +1,43 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<div>
+		<input type="hidden" id="id" name="id" value="{{$id}}" />
+		<label>充值记录:</label>
+		<div id="data_table_log"></div>
+	</div>
+</form>
+<script type="text/javascript">
+	var id = $("#id").val();
+	$('#data_table_log').datagrid({
+		url: '/Admin_User/log/',
+		queryParams: {
+			id: $("#id").val()
+		},
+		nowrap: true,
+		width: 1000,
+		pagination: true,
+		pagePosition: "bottom",
+		pageNumber: 1,
+		pageSize: 10,
+		pageList: [1, 10, 20, 30, 40, 50],
+		striped: true,
+		ctrlSelect: true,
+		columns: [
+			[{
+				field: 'id',
+				title: 'ID',
+				width: 80,
+				align: 'center'
+			}, {
+				field: 'num',
+				title: '数量',
+				width: 80,
+				align: 'center'
+			}, {
+				field: 'time',
+				title: '时间',
+				width: 280,
+				align: 'center'
+			}]
+		]
+	});
+</script>

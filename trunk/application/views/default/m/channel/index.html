@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta content="email=no" name="format-detection" />
+		<meta charset="utf-8">
+		<title>{{$channel.name}}_{{$web_name}}</title>
+		{{include file='../common/importAll.html'}}
+		<link rel="stylesheet" type="text/css" href="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/m/css/wap_list.css?v={{config_item('system_version')}}">
+	</head>
+
+	<body>
+		{{include file='../common/header.html'}}
+		{{include file='../common/position.html'}}
+		<div class="wap_list">
+			<div class="list">
+				<ul>
+					{{foreach $list.list as $k=>$v}}
+					<li>
+						<span><a href="{{formatUrl('article_m', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></span>
+						<div class="list_time">{{date("Y年m月d日 H :i :s")}}</div>
+						<div class="ydqw"><a href="{{formatUrl('article_m', $v.dir, $v.id)}}">[阅读全文]</a></div>
+					</li>
+					{{/foreach}}
+				</ul>
+			</div>
+			{{$list.pages}}
+		</div>
+		{{if !empty($data.img.list)}}
+		<div class="jrkd">
+			<div class="jrkd_title">今日看点</div>
+			<div class="jrkd_pic">
+				<ul>
+					{{foreach $data.img.list as $v}}
+					<li>
+						<a href="{{formatUrl('article_m', $v.dir, $v.id)}}" target="_blank">
+							<img src="{{$v.thumb}}">
+							<span>{{$v.title}}</span>
+						</a>
+					</li>
+					{{/foreach}}
+				</ul>
+			</div>
+		</div>
+		{{/if}}
+		{{if !empty($data.hot.list)}}
+		<div class="rwph">
+			<div class="rwph_title">热文排行</div>
+			<ul>
+				{{foreach $data.hot.list as $v}}
+				<li><a href="{{formatUrl('article_m', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+				{{/foreach}}
+			</ul>
+		</div>
+		{{/if}}
+		{{if !empty($data.search.list)}}
+		<div class="sstj">
+			<div class="sstj_title">搜索推荐</div>
+			<ul>
+				{{foreach $data.search.list as $v}}
+				<li><a href="{{formatUrl('article_m', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+				{{/foreach}}
+			</ul>
+		</div>
+		{{/if}}
+		{{include file='../common/footer.html'}}
+		<div style="display: none;">
+			{{config_item('cnzz_m')}}
+		</div>
+	</body>
+
+</html>

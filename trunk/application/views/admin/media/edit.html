@@ -1,0 +1,62 @@
+<form id="form" action="" method="post" enctype="multipart/form-data" style="line-height: 40px; padding: 10px;" >
+	<input type="hidden" name="id" value="{{$id}}" />
+	<div>
+		<label>栏目名称:</label>
+		<input id="lanname" name="name" value="{{$father.list.0.name}}" />
+	</div>
+	<div>
+		<label>dir：</label>
+		<input id="password" name="dir" value="{{$father.list.0.dir}}" />
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+	adAdd(function() {
+		var username1 = $.trim($("#lanname").val());
+		if (username1 == "") {
+			alert("栏目名不能为空");
+			return false;
+		}
+	}, function() {
+		$('#username1').textbox({
+			width: "30%",
+			prompt: "请输入用户名",
+			type: "text"
+		});
+		$('#password').textbox({
+			width: "30%",
+			prompt: "请输入密码",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+	function adAdd(check, button) {
+		$('#form').form({
+			url: "/Admin_Media/set_attr/",
+			onSubmit: function() {
+				if(check() === false){
+					return false;
+				}
+				$("#window").mask();
+				return true;
+			},
+			success: function(data) {
+				data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.msg);
+				} else {
+					$("#data_table_body").datagrid("reload");
+					$("#window").window("close");
+				}
+				$("#window").unmask();
+			}
+		});
+		button();
+	}
+</script>

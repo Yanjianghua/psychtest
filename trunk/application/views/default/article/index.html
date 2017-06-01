@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<meta http-equiv="Cache-Control" content="no-transform">
+		<meta name="mobile-agent" content="format=html5;url={{getServer('REMOTE_HOST')}}{{formatUrl('article_m', $article.dir, $article.id)}}">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="{{if $article.keywords}}{{$article.keywords}}{{else}}{{$article.title}}{{/if}}">
+		<meta name="description" content="{{if $article.description}}{{$article.description}}{{else}}{{cut_str(strip_tags($article.content), 250)}}{{/if}}" />
+		<title>{{$article.title}}_{{$web_name}}</title>
+		{{include file='../common/importAll.html'}} {{if !isset($addata)}}
+		<script type="text/javascript" id="ad" data-url="{{formatUrl('domain')}}{{formatUrl('home')}}" data-uid="{{$article.uid}}" data-typeid="1" src="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/js/ad.js?v={{config_item('system_version')}}"></script>
+		{{/if}}
+		<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
+		<link href="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/css/article_article.css?v={{config_item('system_version')}}" rel="stylesheet" type="text/css" />
+
+	</head>
+
+	<body>
+		{{include file='../common/header.html'}}
+		<div id="content">
+			<div class="c_top">
+				{{include file='../common/position.html'}}
+			</div>
+			<div class="c_left">
+				<div class="c_l_1">
+					<h1>{{$article.title}}</h1>
+					<div class="clear"></div>
+
+					<div class="xin_xi">
+						<span><a>{{$article.editor}}</a>&nbsp;{{date("Y-m-d", $article.addtime)}}&nbsp;&nbsp;{{if $readnumswich}}阅读量:{{$readnum}}{{/if}}</span>
+						<ul>
+							<li class="sj_kan"><a href="{{formatUrl('article_m', $article.dir, $article.id)}}">手机版</a></li>
+							<li class="bc_dao">
+								<div class="share">
+									<div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1442403177050"><span>分享：</span>
+										<a href="static/images/article_article.htm" class="bds_more" data-cmd="more"></a>
+										<a href="static/images/article_article.htm" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+										<a href="static/images/article_article.htm" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+										<a href="static/images/article_article.htm" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+										<a href="static/images/article_article.htm" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+										<a href="static/images/article_article.htm" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+									</div>
+									<script>
+										with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+									</script>
+								</div>
+
+							</li>
+
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<span class="sheng_m">声明：本文由平台作者撰写，观点仅代表作者本人，如涉及专业知识，仅供参考。</span>
+					<div class="clear"></div>
+					<div class="zheng_w">
+						{{$article.content}}
+					</div>
+					<div class="clear"></div>
+					<div class="zheng_x">
+						<form name="see">
+							<div align="center"><center><table width="635" height="129%" border="0" align="center" cellpadding="10" cellspacing="0" bgcolor="#FFFFFF">
+								<tr>
+									<td height="40" align="center" ><div align="left">
+										<p>{{$article.description}}</p>
+									</div><div align="center"><table border="0" cellpadding="8" cellspacing="0" width="70%">
+										<tr>
+											<td width="50%"><div align="left"><p><span style="font-size: 11pt; line-height: 40px"><input name="c1" type="radio" value="1">{{$article.option1}}</span></p>
+											</div><div align="left"><p><span style="font-size: 11pt; line-height: 40px"><input name="c1" type="radio" value="2">{{$article.option2}}</span></p>
+											</div><div align="left"><p><span style="font-size: 11pt; line-height: 40px"><input name="c1" type="radio" value="3">{{$article.option3}}</span></p>
+											</div><div align="left"><p><span style="font-size:11pt; line-height: 40px"><input name="c1" type="radio" value="4">{{$article.option4}}</span></p>
+											</div>
+											</td>
+										</tr>
+									</table>
+									</div><p><input type="button" value="已选好，看看结论！" onClick="processForm(this.form)" style="font-size: 9pt; font-family: 宋体;width:150px;height:40px;">　　<input type="reset" value="重新选！" onClick="processForm(this.form)" style="font-size: 9pt; font-family: 宋体;width:80px;height:40px;"></p>
+										<p><textarea rows="10" name="answer" cols="70" wrap="virtual" style="font-family: 宋体; font-size: 11pt; line-height: 15px; color: rgb(255,0,0)"></textarea></td>
+								</tr>
+							</table>
+							</center></div>
+						</form>
+
+					</div>
+					<div class="clear30"></div>
+					<ul class="p_n_ul">
+						{{if !empty($prevArticle)}}
+						<li>上一篇：<a href="{{formatUrl('article', $prevArticle.dir, $prevArticle.id)}}">{{$prevArticle.title}}</a></li>
+						{{else}}
+						<li>上一篇：没有了 </li>
+						{{/if}}
+						{{if !empty($nextArticle)}}
+						<li>下一篇：<a href="{{formatUrl('article', $nextArticle.dir, $nextArticle.id)}}">{{$nextArticle.title}}</a></li>
+						{{else}}
+						<li>下一篇：没有了 </li>
+						{{/if}}
+					</ul>
+					<div class="clear20" style="border-bottom:1px solid #dddddd;"></div>
+
+					<div class="f_b_f">
+						<div class="f_b_f_x">
+
+							<div class="share">
+								<div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1442403177050"><span>分享：</span>
+									<a href="static/images/article_article.htm" class="bds_more" data-cmd="more"></a>
+									<a href="static/images/article_article.htm" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+									<a href="static/images/article_article.htm" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+									<a href="static/images/article_article.htm" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+									<a href="static/images/article_article.htm" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+									<a href="static/images/article_article.htm" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+								</div>
+								<script>
+									with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+								</script>
+							</div>
+
+						</div>
+						<ul class="f_b_f_ul">
+							<li class="f_b_b_c">保存在桌面</li>
+							<li class="f_r_s_c">放入收藏夹</li>
+						</ul>
+					</div>
+					<script Language="JavaScript">
+						<!--
+						function processForm(form){
+							if (form.c1[0].checked==1) form.answer.value=
+									"{{$article.content1}}";
+							if (form.c1[1].checked==1) form.answer.value=
+									"{{$article.content2}}";
+							if (form.c1[2].checked==1) form.answer.value=
+									"{{$article.content3}}";
+							if (form.c1[3].checked==1) form.answer.value=
+									"{{$article.content4}}";
+						}
+						//-->
+					</script>
+
+					<div class="clear20"></div>
+				</div>
+
+			</div>
+
+			<div class="c_right">
+				{{if !empty($channelRecommand.list)}}
+				<div class="clear20"></div>
+				<div class="lm_tj">
+					<h2>精彩推荐</h2>
+					<ul class="lm_tj_lb">
+						{{foreach $channelRecommand.list as $k=>$v}}
+						<li><a href="{{formatUrl('article', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+						{{/foreach}}
+					</ul>
+				</div>
+				{{/if}}
+				{{if !empty($allArticle.list)}}
+				<div class="clear20"></div>
+				<div class="re_wen">
+					<h2>精彩测试&nbsp;TOP10</h2>
+					<ul class="num">
+						{{foreach $allArticle.list as $k=>$v}}
+						<li><span class="num_n"{{if $k<3}} style="color:#ff5a00"{{/if}}>{{if $k<9}}0{{$k+1}}{{else}}{{$k+1}}{{/if}}</span><a href="{{formatUrl('article', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+						{{/foreach}}
+					</ul>
+				</div>
+				{{/if}}
+			</div>
+
+		</div>
+		{{include file='../common/footer.html'}}
+		<div style="display: none;">
+			{{config_item('cnzz')}}
+		</div>
+	</body>
+
+</html>

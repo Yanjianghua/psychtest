@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script type="text/javascript" src="/statics/js/lib/my97date/WdatePicker.js"></script>
+		<script src="/statics/admin/js/admin_article/message.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load', {
+					name: $('#name').val(),
+					starttime: $("#starttime").val(),
+					endtime: $("#endtime").val(),
+					title: $('#title').val(),
+					included: $('#included').val()
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="window"></div>
+		<div class="main">
+			<div>
+				<form action="/Message/get_list/" method="post">
+					<label>
+						<input class="easyui-searchbox" id="title" name="username" style="width:150px" data-options="prompt:'请输入姓名'" />
+						<a href="javascript:FindData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+					</label>
+				</form>
+			</div>
+			<div id="data_table" style="float: left;">
+				<table id="data_table_body">
+
+				</table>
+			</div>
+		</div>
+	</body>
+
+</html>

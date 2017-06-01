@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		{{include file='../../common/importAll.html'}}
+		<script src="/statics/js/admin/Login/win.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/statics/js/admin/Login/form.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="win">
+			<form id="form" method="post" style="line-height: 60px; margin: 50px 40px 0 40px;">
+				<input name="Submit" type="hidden" value="1">
+				<div>
+					<label for="username">用户名:</label>
+					<input name="username" id="username">
+				</div>
+				<div>
+					<label for="password">密　码:</label>
+					<input name="password" id="password">
+				</div>
+				<div style="text-align: right;">
+					<div id="submit">登录</div>
+				</div>
+			</form>
+		</div>
+	</body>
+
+</html>

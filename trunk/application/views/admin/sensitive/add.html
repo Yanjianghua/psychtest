@@ -1,0 +1,53 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="" />
+	<div>
+		<label>敏感词:</label>
+		<input id="name1" name="name" value="" />
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+	function adAdd(check, button) {
+		$('#form').form({
+			url: "/Admin_Sensitive/add/",
+			onSubmit: function() {
+				if(check() === false){
+					return false;
+				}
+				$("#window").mask();
+				return true;
+			},
+			success: function(data) {
+				data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.msg);
+				} else {
+					$("#data_table_body").datagrid("reload");
+					$("#window").window("close");
+				}
+				$("#window").unmask();
+			}
+		});
+		button();
+	}
+	adAdd(function() {
+		var name1 = $.trim($("#name1").val());
+		if (name1 == "") {
+			alert("敏感词不能为空");
+			return false;
+		}
+	}, function() {
+		$("#name1").textbox({
+			width: "30%",
+			prompt: "请输入敏感词",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+</script>

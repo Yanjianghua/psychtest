@@ -1,0 +1,50 @@
+.accont td {
+	padding-left: 12px;
+	color: #000;
+	font-size: 12px;
+	font-family: "微软雅黑", "宋体";
+}
+.green {
+	color: #1cc900;
+}
+.red {
+	color: #d30101;
+}
+.coin {
+	background: url("../images/coin.gif") no-repeat 65px 10px;
+}
+.notice {
+	padding: 16px 0 2px 15px;
+	list-style: none;
+}
+.notice li {
+	height: 16px;
+	margin-bottom: 14px;
+	padding-left: 22px;
+	color: #112f61;
+	cursor: pointer;
+	background: url("../images/notice.gif") no-repeat left center;
+}
+.icons {
+	float: left;
+	margin-top: 13px;
+	list-style: none;
+	width: 372px;
+	display: inline;
+	position: relative;
+	left: 50%;
+	margin-left: -471px;
+}
+.icons li {
+	width: 60px;
+	margin-right: 33px;
+	float: left;
+	margin-bottom: 16px;
+}
+.icons li a {
+	font-size: 14px;
+	color: #000;
+	text-align: center;
+	display: block;
+	text-decoration: none;
+}

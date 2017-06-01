@@ -1,0 +1,19 @@
+<div class="clear"></div>
+<div style="width:100%; height:8px; overflow:hidden;"></div>
+<div class="footer">
+	<div class="foot_nav">
+		<ul>
+			{{foreach $channels as $v}}
+			<li><a href="{{formatUrl('channel_m',$v.dir,'')}}">{{$v.name}}</a>
+			</li>
+			{{/foreach}}
+		</ul>
+	</div>
+	<div class="foot_top">
+		<a href="javascript:void(0);" id="returnTop">返回顶部</a>
+	</div>
+	<div class="banquan1">
+		<script type="text/javascript" src="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/m/js/wap_bottom.js"></script>
+	</div>
+</div>
+<script type="text/javascript" src="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/m/js/wap_top.js"></script>

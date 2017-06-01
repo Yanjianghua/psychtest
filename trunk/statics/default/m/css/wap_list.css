@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+.wap_list{ width: 100%; height: auto; overflow: hidden; background: #ffffff;}
+.list{ width: 100%; height: auto; overflow: hidden;}
+.list li{ width: 100%; height: 72px; border-bottom: 1px solid #dedede;}
+.list li span{ height: 26px; line-height: 26px; overflow: hidden; display: block; font-size: 18px; margin-left: 13px; margin-top: 14px; font-family:微软雅黑; color:#000000;}
+.list li span a{ color: #000000;}
+.list_time{ float: left; color: #888888; height: 30px; line-height: 30px; margin-left: 13px;
+	font-family: "宋体"; font-size:12px;}
+.ydqw{ float: right; color: #888888; height: 30px; line-height: 30px; margin-right: 13px;
+	font-family: "宋体"; font-size:12px;}
+
+.fenye{ width: 100%; height: auto; overflow: hidden; text-align: center; margin-top: 20px;
+	 margin-bottom: 26px;}
+.fenye a{ border: 1px solid #e2e2e2; padding: 5px 12px; border-radius: 5px; display: inline-block;
+	color: #666666; font-size: 14px; font-family:微软雅黑;}
+.fenye .yeshu{ display: inline-block; width: 26px; height: 18px;border: 1px solid #d2d2d2;
+	font-style: normal; color: #666666; margin: 0px 2px;}
+.fenye em{ font-style: normal;}
+.fenye .thisclass{ background: #207cd3;color: #fff;}
+
+
+
+.jrkd{ width: 100%; height: auto; overflow: hidden;
+	border-top: 1px solid #e2e2e2;}
+.jrkd_title{height: 30px; overflow: hidden; line-height: 30px; font-weight: bold;
+	font-size: 18px; margin-left: 11px; margin-top: 17px; color: #207cd3; font-family:微软雅黑;}
+.jrkd_pic{ width: 100%; height: auto; overflow: hidden; margin-top: 14px;}
+.jrkd_pic li{ width: 145px;height: auto; overflow: hidden; float: left; margin-left: 10px;
+	margin-bottom: 10px;}
+.jrkd_pic li img{ width: 145px; height: 100px; margin-bottom: 4px;}
+.jrkd_pic li span{ color: #000000; font-size: 14px; width: 145px; display: block; height: 24px;
+	line-height: 24px; overflow: hidden; font-family:微软雅黑;}
+
+
+
+.rwph{ width: 100%; height: auto; overflow: hidden;}
+.rwph_title{height: 30px; overflow: hidden; line-height: 30px; font-weight: bold;
+	font-size: 18px; margin-left: 11px; margin-top: 17px; color: #207cd3; font-family:微软雅黑; margin-bottom:20px;}
+.rwph ul{ background:url(../images/liebiao_03.jpg) no-repeat; overflow: hidden;
+	margin-left: 10px;}
+.rwph ul li{ height: 30px; line-height: 14px; overflow: hidden; font-size: 16px; font-family:微软雅黑;}
+.rwph ul li a{ padding-left: 20px; color: #000000;}
+
+
+.sstj{ margin-top: 17px; width: 100%; height: auto; overflow: hidden; background: #fff;
+	border-top: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2;}
+.sstj_title{border-bottom: 1px solid #e2e2e2; height: 38px; line-height: 38px;
+	background: url("../images/wap_list_60.jpg") no-repeat 22px 10px; color: #000000;
+	font-size: 16px; padding-left: 50px;}
+.sstj ul{ margin-top: 6px; margin-bottom: 10px; width:100%; height: auto; padding-left:10px; padding-right:10px; overflow: hidden; box-sizing:border-box;}
+.sstj ul li{ height: 28px; line-height: 28px; overflow: hidden; float: left; width: 50%; font-size: 14px;}
+.sstj ul li a{ color: #1962cc}

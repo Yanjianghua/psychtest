@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>后台系统</title>
+		{{include file='../../common/importAll.html'}}
+		<script type="text/javascript" charset="utf-8">
+			$(function() {
+				$("#tree_menu").tree({
+					lines: true,
+					onClick: function (node) {
+						console.log(node);
+						if (node.controller && node.method) {
+							var url = "/" + node.controller + "/" + node.method + "/";
+							$('#sys_main').attr('src', url);
+						}
+					}
+				});
+			});
+		</script>
+	</head>
+
+	<body class="easyui-layout">
+		<div id="header" region="north" style="height:69px;">
+			<div class="right">
+				<img src="/statics/images/avatar.gif" />
+				<span>欢迎您！<b>{{$login_user['username']}}</b></span>
+				<div class="links">
+					<a href="/Admin_Login/logout/">安全退出</a>
+				</div>
+			</div>
+		</div>
+
+		<div region="west" title="导航菜单" split="true" style="width:200px">
+			<div class="easyui-accordion" style="height:100%;">
+				<div title="系统设置">
+					<ul id="tree_menu" class="easyui-tree" data-options="url:'/Admin_Menu/get_menu/'"></ul>
+				</div>
+			</div>
+		</div>
+
+		<div region="center">
+			<iframe id="sys_main" src="/Admin_Article/index/" height="100%" width="100%" frameborder='0' marginheight='0' marginwidth='0' scrolling='yes'></iframe>
+		</div>
+
+		<div id="footer" region="south" style="height:35px;">
+			<center>
+				这里是底部 <a href="#">联系我们</a>
+			</center>
+		</div>
+	</body>
+
+</html>

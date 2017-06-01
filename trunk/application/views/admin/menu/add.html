@@ -1,0 +1,87 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="" />
+	<div>
+		<label>父名称:</label>
+		<select name="pid" id="pid" value="">
+
+		</select>
+	</div>
+	<div>
+		<label>权限名称:</label>
+		<input id="name" name="name" value="" />
+	</div>
+	<div>
+		<label>控制器名称:</label>
+		<input id="controller" name="controller" value="" />
+	</div>
+	<div>
+		<label>方法名称:</label>
+		<input id="method" name="method" value="" />
+	</div>
+	<div>
+		<label>是否隐藏:</label>
+		<input type="checkbox" name="hide" value="1" />
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+	function adAdd(check, button) {
+		$('#form').form({
+			url: "/Admin_Menu/add/",
+			onSubmit: function() {
+				if(check() === false){
+					return false;
+				}
+				$("#window").mask();
+				return true;
+			},
+			success: function(data) {
+				data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.msg);
+				} else {
+					$("#data_table_body").datagrid("reload");
+					$("#window").window("close");
+				}
+				$("#window").unmask();
+			}
+		});
+		button();
+	}
+	adAdd(function() {
+		var name = $.trim($("#name").val());
+		if (name == "") {
+			alert("权限名称不能为空");
+			return false;
+		}
+	}, function() {
+		var data = {{json_encode($father)}};
+		$("#pid").combotree({
+			data: data,
+			required: true,
+			width: 500
+		});
+		$("#name").textbox({
+			width: "30%",
+			prompt: "请输入权限名称",
+			type: "text"
+		});
+		$('#controller').textbox({
+			width: "30%",
+			prompt: "请输入控制器名称",
+			type: "text"
+		});
+		$('#method').textbox({
+			width: "30%",
+			prompt: "请输入方法名称",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+</script>

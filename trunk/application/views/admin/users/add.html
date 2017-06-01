@@ -1,0 +1,54 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{if !empty($Users)}}{{$Users.0.id}}{{/if}}" />
+	<div>
+		<label>用户名:</label>
+		<input id="username1" name="username" value="{{if !empty($Users)}}{{$Users.0.username}}{{/if}}" />
+	</div>
+	<div>
+		<label>密&nbsp;&nbsp;&nbsp;码:</label>
+		<input id="password" name="password" value="{{if !empty($Users)}}{{$Users.0.password}}{{/if}}" />
+	</div>
+	<div>
+		<label>用  户  组:</label>
+		<select name="rid" id="rid" class="easyui-combobox">
+			<option value="">请选择用户组</option>
+			{{foreach $roles as $k=>$v}}
+			<option value="{{$v.id}}">{{$v.name}}</option>
+			{{/foreach}}
+		</select>
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script src="/statics/admin/js/admin_users/ad.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	adAdd(function() {
+		var username1 = $.trim($("#username1").val());
+		var password = $.trim($("#password").val());
+		if (username1 == "") {
+			alert("用户名不能为空");
+			return false;
+		}
+		if (password == "") {
+			alert("密码不能为空");
+			return false;
+		}
+	}, function() {
+		$('#username1').textbox({
+			width: "30%",
+			prompt: "请输入用户名",
+			type: "text"
+		});
+		$('#password').textbox({
+			width: "30%",
+			prompt: "请输入密码",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+</script>

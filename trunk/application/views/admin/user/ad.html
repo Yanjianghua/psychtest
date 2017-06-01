@@ -1,0 +1,50 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{$id}}" />
+	<div>
+		<label>是否开启第三方广告:</label>
+		<input id="open" type="checkbox" name="ad" {{if $user['thardparty'] ==1}} checked="checked"{{/if}}>开启
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+function adAdd(check, button) {
+	$('#form').form({
+		url: "/Admin_User/ad/",
+		onSubmit: function() {
+			if(check() === false){
+				return false;
+			}
+			$("#window").mask();
+			return true;
+		},
+		success: function(data) {
+			data = JSON.parse(data);
+			if (!data.success) {
+				alert(data.msg);
+			} else {
+				$("#data_table_body").datagrid("reload");
+				$("#window").window("close");
+			}
+			$("#window").unmask();
+		}
+	});
+	button();
+}
+
+	adAdd(function() {
+		var a = $("#open").prop('checked');
+		if(a){
+			$("#open").val(1);
+		} else {
+			$("#open").val(0);
+		}
+	}, function() {
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+</script>

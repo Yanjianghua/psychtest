@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script src="/statics/admin/js/Statistics/data_table_body.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="/statics/js/lib/my97date/WdatePicker.js"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load', {
+					time: $('#time').val(),
+					mid: $("#media").combobox('getValue')
+				});
+			}
+
+			function ExportData() {
+				$("#aform").submit();
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="window"></div>
+		<div class="main">
+			<div>
+				<form method="post" id="aform" action="/Admin_Statistics/export_list/">
+					<label>
+						<input id="time" name="time" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="{{date('Y-m-d', strtotime('-1 days'))}}" /> 媒体：
+						<select id="media" name="media" class="easyui-combobox">
+							<option value="">请选择</option>
+							{{foreach $media.list as $v}}
+							<option value="{{$v.id}}">{{$v.name}}</option>
+							{{/foreach}}
+						</select>
+						<a href="javascript:FindData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+						<a href="javascript:ExportData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">导出</a>
+					</label>
+				</form>
+			</div>
+			<div id="data_table" style="float: left;">
+				<table id="data_table_body">
+
+				</table>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>{{$channel.name}}_{{$web_name}}</title>
+		{{include file='../common/importAll.html'}}
+		<link href="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/css/list_article.css?v={{config_item('system_version')}}" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+		{{include file='../common/header.html'}}
+		<div class="clear"></div>
+		<div id="content">
+			{{include file='../common/position.html'}}
+			<div class="c_left">
+				{{if !empty($list)}}
+				<ul class="c_left_ul">
+					{{foreach $list.list as $v}}
+					<li>
+						<h2><a href="{{formatUrl('article', $v.dir, $v.id)}}" target="_blank"><b>{{$v.title}}</b></a></h2>
+						<p>{{cut_str($v.content, 100)}}...<a target="_blank" href="{{formatUrl('article', $v.dir, $v.id)}}">【阅读全文】</a></p>
+					</li>
+					{{/foreach}}
+				</ul>
+				{{/if}}
+				<div class="c_page">
+					{{$list.pages}}
+				</div>
+			</div>
+
+			<div class="c_right">
+				{{if !empty($data.recommand.list)}}
+				<div class="re_wen">
+					<h2>精彩测试</h2>
+					<ul class="num">
+						{{foreach $data.recommand.list as $k=>$v}}
+						<li><span class="num_n" {{if $k<3}} style="background-color:#f46e62" {{/if}}>{{$k+1}}</span> <a href="{{formatUrl('article', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+						{{/foreach}}
+					</ul>
+				</div>
+				{{/if}} {{if !empty($data.hot.list)}}
+				<div class="clear20"></div>
+				<div class="re_ping">
+					<h2>今日推荐</h2>
+					<ul>
+						{{foreach $data.hot.list as $k=>$v}}
+						<li><a href="{{formatUrl('article', $v.dir, $v.id)}}">{{$v.title}}</a></li>
+						{{/foreach}}
+					</ul>
+				</div>
+				{{/if}}
+				</div>
+
+			</div>
+		</div>
+		{{include file='../common/footer.html'}}
+		<div style="display: none;">
+			{{config_item('cnzz')}}
+		</div>
+	</body>
+
+</html>

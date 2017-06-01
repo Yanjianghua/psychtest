@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>{{$web_name}}</title>
+		{{include file='../common/importAll.html'}}
+		<link href="{{formatUrl('domain')}}{{formatUrl('home')}}statics/{{config_item('style')}}/css/index_article.css?v={{config_item('system_version')}}" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+		{{include file='../common/header.html'}}
+		<div id="content">
+			<div id="content_s">
+				<div class="s_l">
+					<h2 class="t_t"><a>神测</a></h2> {{if !empty($data.head.list)}}
+					<ul class="s_l_t">
+						{{foreach $data.head.list as $k=>$v}} {{if $k%4!=0}} {{continue}} {{/if}}
+						<li class="text_blue">
+							<a class="text_blue" href="{{formatUrl('article', $data.head.list[$k].dir, $data.head.list[$k].id)}}" target="_blank">{{$v.title}}</a>
+						</li>
+						<li>
+							{{if isset($data.head.list[$k+1])}}
+							<a class="li_a1" href="{{formatUrl('article', $data.head.list[$k+1].dir, $data.head.list[$k+1].id)}}" target="_blank">{{$data.head.list[$k+1].title}}</a> {{/if}} {{if isset($data.head.list[$k+2])}}
+							<a class="li_a2" href="{{formatUrl('article', $data.head.list[$k+2].dir, $data.head.list[$k+2].id)}}" target="_blank">{{$data.head.list[$k+2].title}}</a> {{/if}} {{if isset($data.head.list[$k+3])}}
+							<a class="li_a3" href="{{formatUrl('article', $data.head.list[$k+3].dir, $data.head.list[$k+3].id)}}" target="_blank">{{$data.head.list[$k+3].title}}</a> {{/if}}
+						</li>
+						{{/foreach}}
+					</ul>
+					{{/if}}
+					<div class="clear20"></div>
+				</div>
+				{{if !empty($data.newest.list)}}
+				<div class="s_c">
+					<span><a>最新测试</a></span>
+					{{foreach $data.newest.list as $k=>$v}} {{if $k%5!=0}}{{continue}}{{/if}} {{if $k>=5}}
+					<div class="line"></div>
+					{{/if}}
+					<ul{{if $k<5}} style="margin-top:20px;" {{/if}}>
+						{{for $i=0;$i<5;$i++}} {{if !empty($data.newest.list[$k+$i])}} <li><a target="_blank" href="{{formatUrl('article', $data.newest.list[$k+$i].dir, $data.newest.list[$k+$i].id)}}">{{$data.newest.list[$k+$i].title}}</a></li>
+							{{/if}} {{/for}}
+					</ul>
+					{{/foreach}}
+				</div>
+				{{/if}}
+				<div class="s_r">
+					<span class="s_r_s"><a style="color:#589ede" href="#">一周排行榜</a></span> {{if !empty($data.recommandimg.list)}}
+					{{/if}} {{if !empty($data.recommand.list)}}
+					<ul class="num">
+						{{foreach $data.recommand.list as $k=>$v}}
+						<li><span class="num_n" {{if $k<3}} style="background-color:#f46e62" {{/if}}>{{$k+1}}</span><a href="{{formatUrl('article', $v.dir, $v.id)}}" target="_blank">{{$v.title}}</a></li>
+						{{/foreach}}
+					</ul>
+					{{/if}}
+				</div>
+			</div>
+			<div class="clear20"></div>
+			<!-- 栏目内容 start-->
+			<div class="content_z">
+				{{foreach $data.mod as $k=>$v}}
+				<div class="c_z{{if $k%3==0}} c_z_l{{/if}}{{if $k%3==2}} c_z_r{{/if}}">
+					<h2><a href="{{formatUrl('channel',{{$v.dir}}, '')}}">{{$v.name}}</a></h2>
+					{{if !empty($v.head.list)}}
+					<div class="c_z_pic_t">
+						<div class="c_z_pic">
+							<a href="{{formatUrl('article', $v.head.list.0.dir, $v.head.list.0.id)}}"><img src="{{$v.head.list.0.thumb}}" /></a>
+						</div>
+						<div class="c_z_t">
+							<span><a href="{{formatUrl('article', $v.head.list.0.dir, $v.head.list.0.id)}}">{{$v.head.list.0.title}}</a></span>
+							<p>
+								{{cut_str($v.head.list.0.content, 25)}}...<a style="color:#0175c1" href="{{formatUrl('article', $v.head.list.0.dir, $v.head.list.0.id)}}" target="_blank">[详细]</a>
+							</p>
+						</div>
+
+					</div>
+					{{/if}}
+					{{if !empty($v.list)}}
+					<ul>
+						{{foreach $v.list.list as $k1=>$v1}}
+						<li><a target="_blank" href="{{formatUrl('article', $v1.dir, $v1.id)}}">{{$v1.title}}</a></li>
+						{{/foreach}}
+					</ul>
+					{{/if}}
+				</div>
+				{{/foreach}}
+			</div>
+			<!-- 栏目内容 end-->
+			<div class="clear"></div>
+			{{if !empty($data.last.list.list)}}
+			<div class="content_x">
+				<span><a href="{{formatUrl('channel', $data.last.dir, '')}}" target="_blank">{{$data.last.name}}</a></span>
+				<div class="c_x_ul">
+					<ul>
+						{{foreach $data.last.list.list as $k=>$v}}
+						<li>
+							<p><a href="{{formatUrl('article', $v.dir, $v.id)}}">{{$v.title}}</a></p>
+						</li>
+						{{/foreach}}
+					</ul>
+				</div>
+			</div>
+			{{/if}} {{if !empty($data.rollnews.list)}}
+			<div class="clear20"></div>
+			<div class="content_x">
+				<span><a href="{{formatUrl('rollnews', '')}}" target="_blank">滚动测试</a></span>
+			</div>
+			<div class="c_x_ul" style="overflow:hidden;height:95px;">
+				<ul class="roll_news">
+					{{foreach $data.rollnews.list as $k=>$v}}
+					<li><a target="_blank" href="{{formatUrl('article', $v.dir, $v.id)}}">{{$v.title}}</a></li>
+					{{/foreach}}
+				</ul>
+			</div>
+			{{/if}}
+			<div class="clear20"></div>
+		</div>
+		{{include file='../common/footer.html'}}
+		<div style="display: none;">
+			{{config_item('cnzz')}}
+		</div>
+	</body>
+
+</html>

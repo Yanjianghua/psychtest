@@ -1,0 +1,3 @@
+<div class="position">
+	<a href="{{formatUrl('home_m')}}">{{$web_name}}</a>{{if !empty($channel)}} &gt; <a href="{{formatUrl('channel_m', $channel.dir, '')}}">{{$channel.name}}</a>{{/if}} {{if !empty($article)}} &gt; {{$article.title}}{{/if}}
+</div>

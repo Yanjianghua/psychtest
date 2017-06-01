@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script type="text/javascript" src="/statics/js/lib/my97date/WdatePicker.js"></script>
+		<script src="/statics/admin/js/admin_article/Recovery.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load', {
+					name: $('#name').val(),
+					starttime: $("#starttime").val(),
+					endtime: $("#endtime").val(),
+					title: $('#title').val(),
+					included: $('#included').val()
+				});
+			}
+			$(function() {
+				var today = new Date();
+				$("#starttime").val(today.Format("YYYY-MM-DD 00:00:00"));
+				$("#endtime").val(today.Format("YYYY-MM-DD 23:59:59"));
+				var oldStarttime = $("#starttime").val();
+				var oldEndtime = $("#endtime").val();
+				$("#starttime").focus(function() {
+					WdatePicker({
+						dateFmt: 'yyyy-MM-dd HH:mm:ss',
+						opposite: true,
+						onpicked: function() {
+							if ($(this).val().strtotime().getTime() > $("#endtime").val().strtotime().getTime()) {
+								alert("起始时间不能大于结束时间");
+								$("#starttime").val(oldStarttime);
+							}
+							oldStarttime = $(this).val()
+						}
+					});
+				});
+				$("#endtime").focus(function() {
+					WdatePicker({
+						dateFmt: 'yyyy-MM-dd HH:mm:ss',
+						opposite: true,
+						onpicked: function() {
+							if ($(this).val().strtotime().getTime() < $("#starttime").val().strtotime().getTime()) {
+								alert("结束时间不能小于起始时间");
+								$("#endtime").val(oldEndtime);
+							}
+							oldEndtime = $(this).val()
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+	<div id="window"></div>
+	<div class="main">
+		<div>
+			<form action="/Admin_Recovery/get_list/" method="post">
+				<input type="hidden" name="type" value="csv" />
+				<label>
+					<input class="easyui-searchbox" name="name" id="name" style="width:150px" data-options="prompt:'请输入用户名'" />
+					<input id="starttime" name="starttime" style="width:150px;" readonly="readonly">&nbsp;&nbsp;至&nbsp;&nbsp;
+					<input id="endtime" name="endtime" style="width:150px;" readonly="readonly"> &nbsp;
+					<input class="easyui-searchbox" id="title" name="title" style="width:150px" data-options="prompt:'请输入文章标题'" />
+					<select name="included" id="included">
+						<option value="">全部</option>
+						<option value="{{Article_model::INCLUDED_YES}}">已收录</option>
+						<option value="{{Article_model::INCLUDED_NO}}">未收录</option>
+						<option value="{{Article_model::INCLUDED_WAIT}}">未查询</option>
+					</select>
+					<a href="javascript:FindData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+				</label>
+			</form>
+		</div>
+		<div id="data_table" style="float: left;">
+			<table id="data_table_body">
+
+			</table>
+		</div>
+	</div>
+	</body>
+
+</html>

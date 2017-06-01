@@ -1,0 +1,69 @@
+<form method="post" id="form" class="myform" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" />
+	<div>
+		<label>父名称:</label>
+		<select name="pid" id="pid">
+
+		</select>
+	</div>
+	<div>
+		<label>菜单名称:</label>
+		<input id="name" name="name" require="true" />
+	</div>
+	<div>
+		<label>控制器名称:</label>
+		<input id="controller" name="controller" require="true" />
+	</div>
+	<div class="row">
+		<label>方法名称:</label>
+		<input id="method" name="method" require="true" />
+	</div>
+	<div>
+		<label>是否隐藏:</label>
+		<input type="checkbox" name="hide" value="1" />
+	</div>
+	<div>
+		<input type="submit" value="提交">
+	</div>
+</form>
+
+<script type="text/javascript">
+	var data = {{json_encode($father)}};
+	$("#pid").combotree({
+		data: data,
+		required: true,
+		width: 500
+	});
+	$("#name").textbox({
+		width: "30%",
+		prompt: "请输入权限名称",
+		type: "text"
+	});
+	$('#controller').textbox({
+		width: "30%",
+		prompt: "请输入控制器名称",
+		type: "text"
+	});
+	$('#method').textbox({
+		width: "30%",
+		prompt: "请输入方法名称",
+		type: "text"
+	});
+	{{if isset($edit)}}
+	var row = $("#data_table_body").datagrid("getSelected");
+	$("#form").form("clear");
+	$("#form").form("load", row);
+	{{/if}}
+	$('#form').form({
+		url: "/Admin_Menu/add/",
+		success: function(data) {
+			data = JSON.parse(data);
+			if (data && data.success) {
+				$("#window").window("close");
+				$("#data_table_body").treegrid("load");
+			} else {
+				alert(data.msg);
+			}
+		}
+	});
+</script>

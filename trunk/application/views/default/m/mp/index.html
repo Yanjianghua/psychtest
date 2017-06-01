@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta content="email=no" name="format-detection" />
+		<meta charset="utf-8">
+		<title>滚动新闻</title>
+		<meta name="keywords" content="滚动新闻">
+		<meta name="description" content="滚动新闻">
+		{{include file='../common/importAll.html'}}
+		<link href="{{formatUrl('domain')}}{{formatUrl('home')}}statics/default/css/index_article.css" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+		{{include file='../common/header.html'}}
+		<div id="content">
+			<div class="clear20"></div>
+			<div class="article_map">
+				<div class="mybox">
+					所有栏目： {{foreach $allChannel as $v}}
+					<a href="{{formatUrl('channel_m',$v.dir,'')}}" target="_blank">{{$v.name}}</a> {{/foreach}}
+				</div>
+				<div class="clear20"></div>
+				{{if !empty($list)}}
+				<ul>
+					{{foreach $list as $k=>$v}}
+					<li>
+						<a target="_blank" href="{{formatUrl('article_m', $v.dir, $v.id)}}">{{$v.title}}</a>
+						<span>{{date("Y-m-d", $v.addtime)}}</span>
+					</li>
+					{{/foreach}}
+				</ul>
+				{{/if}}
+				<div class="clear20"></div>
+				<div class="mybox">
+					{{for $i=1;$i<=min(100,$pages);$i++}} <a href="{{formatUrl('rollnews',$i)}}">{{$i}}</a>
+						{{/for}}
+				</div>
+
+				<div class="clear20"></div>
+				{{if !empty($linklist)}}
+				<div class="mybox">
+					合作媒体：
+					{{foreach $linklist as $k=>$v}}
+					<a href="{{$v.url}}" target="_blank">{{$v.title}}</a>
+					{{/foreach}}
+				</div>
+				{{/if}}
+			</div>
+		</div>
+		{{include file='../common/footer.html'}}
+	</body>
+
+</html>

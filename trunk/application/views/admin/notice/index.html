@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script src="/statics/admin/js/admin_notice/data_table_body.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load');
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="window"></div>
+		<div class="main">
+			<div id="data_table" style="float: left;">
+				<table id="data_table_body">
+
+				</table>
+			</div>
+		</div>
+	</body>
+
+</html>

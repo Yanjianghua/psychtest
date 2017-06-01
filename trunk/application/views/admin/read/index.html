@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script type="text/javascript" src="/statics/js/lib/my97date/WdatePicker.js"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load', {
+					name: $('#name').val(),
+					starttime: $("#starttime").val(),
+					endtime: $("#endtime").val(),
+					title: $('#title').val(),
+					included: $('#included').val()
+				});
+			}
+			$(function() {
+				var today = new Date();
+				$("#starttime").val(today.Format("YYYY-MM-DD 00:00:00"));
+				$("#endtime").val(today.Format("YYYY-MM-DD 23:59:59"));
+				var oldStarttime = $("#starttime").val();
+				var oldEndtime = $("#endtime").val();
+				$("#starttime").focus(function() {
+					WdatePicker({
+						dateFmt: 'yyyy-MM-dd HH:mm:ss',
+						opposite: true,
+						onpicked: function() {
+							if ($(this).val().strtotime().getTime() > $("#endtime").val().strtotime().getTime()) {
+								alert("起始时间不能大于结束时间");
+								$("#starttime").val(oldStarttime);
+							}
+							oldStarttime = $(this).val()
+						}
+					});
+				});
+				$("#endtime").focus(function() {
+					WdatePicker({
+						dateFmt: 'yyyy-MM-dd HH:mm:ss',
+						opposite: true,
+						onpicked: function() {
+							if ($(this).val().strtotime().getTime() < $("#starttime").val().strtotime().getTime()) {
+								alert("结束时间不能小于开始时间");
+								$("#endtime").val(oldEndtime);
+							}
+							if ($(this).val().strtotime().getTime() >= ($("#starttime").val().strtotime().getTime() + 3600*24*30*1000)) {
+								alert("结束时间超过起始时间30天");
+								$("#endtime").val(oldEndtime);
+							}
+							oldEndtime = $(this).val()
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="window"></div>
+		<div class="main">
+			<div>
+				<form action="/Admin_Read/get_list/" method="post">
+					<input type="hidden" name="type" value="csv" />
+					<label>
+						<input class="easyui-searchbox" name="name" id="name" style="width:150px" data-options="prompt:'请输入用户名'" />
+						<input id="starttime" name="starttime" style="width:150px;" readonly="readonly">&nbsp;&nbsp;至&nbsp;&nbsp;
+						<input id="endtime" name="endtime" style="width:150px;" readonly="readonly"> &nbsp;
+					    <a href="javascript:FindData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+					</label>
+				</form>
+			</div>
+			<div id="data_table" style="float: left;">
+				<table id="data_table_body">
+
+				</table>
+			</div>
+		</div>
+	<script>
+		$(function() {
+			function checkReommand() {
+				var selections = $(this).datagrid("getSelections");
+				if (selections.length > 1 || selections.length == 0) {
+					$("#recommand").linkbutton("disable");
+				} else {
+					$("#recommand").linkbutton("enable");
+				}
+			}
+
+			function checkUnreommand() {
+				var selections = $(this).datagrid("getSelections");
+				if (selections.length > 1 || selections.length == 0) {
+					$("#unrecommand").linkbutton("disable");
+				} else {
+					$("#unrecommand").linkbutton("enable");
+				}
+			}
+
+			function checkEdit() {
+				var selections = $(this).datagrid("getSelections");
+				if (selections.length > 1 || selections.length == 0) {
+					$("#editbar").linkbutton("disable");
+				} else {
+					$("#editbar").linkbutton("enable");
+				}
+			}
+
+			function checkDelete() {
+				var selections = $(this).datagrid("getSelections");
+				if (selections.length <= 0) {
+					$("#deletebar").linkbutton("disable");
+				} else {
+					$("#deletebar").linkbutton("enable");
+				}
+			}
+
+			function doCallback(callback) {
+				var row = $('#data_table_body').datagrid("getSelected");
+				var rowindex = $('#data_table_body').datagrid("getRowIndex", row);
+				var selections = $('#data_table_body').datagrid("getSelections");
+				callback.call(this, row, rowindex, selections);
+			}
+			$('#data_table_body').datagrid({
+				url: '/Admin_Read/get_list/',
+				queryParams: {
+					"typeid": 1
+				},
+				nowrap: true,
+				width: 1562,
+				pagination: true,
+				pagePosition: "bottom",
+				pageNumber: 1,
+				pageSize: 20,
+				pageList: [10, 20, 30, 40, 50],
+				striped: true,
+				ctrlSelect: true,
+				columns: [
+					[{
+						field: 'id',
+						title: 'ID',
+						width: 80,
+						align: 'center'
+					}, {
+						field: 'time',
+						title: '日期',
+						width: 200,
+						align: 'center'
+					}, {
+						field: 'read_sum',
+						title: '阅读量',
+						width: 100,
+						align: 'center'
+					}, {
+						field: 'read_real',
+						title: '真实阅读量',
+						width: 100,
+						align: 'center'
+					}]
+				],
+				onSelect: function(rowIndex, rowData) {
+					checkReommand.call(this);
+					checkUnreommand.call(this);
+					checkEdit.call(this);
+					checkDelete.call(this);
+				},
+				onUnselect: function(rowIndex, rowData) {
+					checkReommand.call(this);
+					checkUnreommand.call(this);
+					checkEdit.call(this);
+					checkDelete.call(this);
+				}
+			});
+		});
+	</script>
+	</body>
+
+</html>

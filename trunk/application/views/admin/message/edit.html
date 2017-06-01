@@ -1,0 +1,86 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{$message.0.id}}" />
+	<div>
+		<label>姓名:</label>
+		<input id="username" name="username" value="{{$message.0.username}}" />
+	</div>
+	<div>
+		<label>年龄:</label>
+		<input id="age" name="age" value="{{$message.0.age}}" />
+	</div>
+	<div>
+		<label>QQ:</label>
+		<input id="qq" name="qq" value="{{$message.0.qq}}" />
+	</div>
+	<div>
+		<label>手机号:</label>
+		<input id="telephone" name="telephone" value="{{$message.0.telephone}}" />
+	</div>
+	<div>
+		<label>留言内容:</label>
+		<input id="content" name="content" value="{{$message.0.content}}" />
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script type="text/javascript">
+	function adAdd(check, button) {
+		$('#form').form({
+			url: "/Message/edit/",
+			onSubmit: function() {
+				if(check() === false){
+					return false;
+				}
+				$("#window").mask();
+				return true;
+			},
+			success: function(data) {
+				data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.msg);
+				} else {
+					$("#data_table_body").datagrid("reload");
+					$("#window").window("close");
+				}
+				$("#window").unmask();
+			}
+		});
+		button();
+	}
+	adAdd(function() {
+		var name = $.trim($("#dir").val());
+	}, function() {
+		$("#username").textbox({
+			width: "30%",
+			prompt: "请输入姓名",
+			type: "text"
+		});
+		$('#age').textbox({
+			width: "30%",
+			prompt: "请输入年龄",
+			type: "number"
+		});
+		$('#qq').textbox({
+			width: "80%",
+			prompt: "请输入QQ",
+			type: "number"
+		});
+		$('#telephone').textbox({
+			width: "80%",
+			prompt: "请输入手机号",
+			type: "number"
+		});
+		$('#content').textbox({
+			width: "30%",
+			height:"300%",
+			prompt: "请输入内容",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+</script>

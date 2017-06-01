@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+html,body,div,p,ul,ol,li,dl,dt,dd,h1,span,h3,h4,h5,h6,
+	form,input,select,button,textarea,iframe,table,th,td{ margin:0; padding:0;}
+body{ font-size: 12px; font-family:'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;
+	background: #f8f8f8;}
+a{ text-decoration: none; color: #333333;}
+img{ border: 0px;}
+li{ list-style: none;}
+.clear{ clear:both;}
+.kongxi{ width:100%; height:10px; overflow:hidden;}
+
+
+.all{ width:100%; height:auto; margin:0 auto; background:#f8f8f8;}
+
+
+.header{ width: 100%; height: 38px; background:#f8f8f6;}
+.time{ float: left; width: 70%; margin-left: 11px; height: 38px; line-height: 38px;
+	color: #666666;}
+.time p{ font-family:微软雅黑; font-size:12px; color:#666666;}	
+.shouye{ width: 43px; height: 22px; line-height: 22px; text-align: center; margin-top: 9px;
+	float: right; margin-right: 13px; background: #207cd3; border-radius: 5px;}
+.shouye a{ color: #fff;}
+
+
+.nav{ width: 100%; background: #1962cc; padding: 10px; box-sizing: border-box; height: 90px;}
+.nav li{ height: 26px; line-height: 26px; display: inline; font-size: 14px; padding: 0px 5px; font-family:微软雅黑; color:#f8f8f8;}
+.nav li a{ color: #f8f8f8;}
+
+
+
+
+
+.footer{ width: 100%; height: auto; overflow: hidden;
+	background: #1962cb; padding: 10px 0px;}
+.foot_nav{ width: 100%; background: #1962cc; padding: 10px; box-sizing: border-box; height: 70px;}
+.foot_nav li{ height: 26px; line-height: 26px; display: inline; font-size: 14px; padding: 0px 5px;
+	border-right: 1px solid #1752ac;}
+.foot_nav li:last-child{ border-right: none;}
+.foot_nav li a{ color: #FFF; }
+.foot_top{ width: 84px; height: 27px; margin: 20px auto 0px; line-height: 27px;
+	text-align: center; font-size: 14px; color: #f8f8f8; background: #124ea2;
+	border-radius: 5px; font-weight: bold;}
+.foot_top a{ color: #f8f8f8}
+.banquan1{ height: auto; overflow: hidden; margin-top: 20px; padding-left: 14px;
+	line-height: 22px; color: #c3d3fc; font-family: "宋体"; padding-bottom: 20px;
+	border-top: 1px solid #124ea2; padding-top: 10px; padding-right:18px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.piaofudibu{ width:100%; height:35px; position:fixed; bottom:10px; z-index:999;}
+.piaofudibuz{ width:256px; margin:0 auto; height:35px;}
+.piaofudibuz img{ margin-right:8px; float:left;}
+
+
+
+
+
+
+
+
+
+.position{ height:40px; padding-left: 12px; font-size: 14px;
+	line-height: 40px; background: #fff; font-family:微软雅黑;}
+.position a{ color: #333333;}
+
+

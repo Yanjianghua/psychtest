@@ -1,0 +1,59 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+#header {
+	background: url(../images/head.gif) no-repeat #5f90d2;
+}
+#header .right {
+	float: right;
+	display: inline;
+	margin-right: 41px;
+}
+#header .right img {
+	float: left;
+	margin-top: 14px;
+}
+#header .right span {
+	color: #FFF;
+	float: left;
+	display: inline;
+	margin-left: 14px;
+	margin-top: 14px;
+}
+#header .right span b {
+	color: #ffe94d;
+	font-weight: normal;
+}
+#header .right div {
+	margin-left: 57px;
+	margin-top: 37px;
+	color: #FFF;
+}
+#header .right div a {
+	color: #FFF;
+	text-decoration: none;
+	cursor: pointer;
+}
+#footer center {
+	margin-top: 3px;
+}
+#footer center span {
+	background: url(../images/a_06.gif) no-repeat left center;
+	font-size: 14px;
+	font-family: "微软雅黑";
+	color: #666666;
+	height: 20px;
+	line-height: 20px;
+	display: inline-block;
+	padding-left: 25px;
+	vertical-align: middle;
+}
+#footer center a {
+	width: 74px;
+	height: 23px;
+	display: inline-block;
+	margin-left: 11px;
+	background: url(../images/a_03.gif) no-repeat;
+	vertical-align: middle;
+}

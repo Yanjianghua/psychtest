@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		{{include file='../../common/importAll.html'}}
+		<script type="text/javascript" src="/statics/js/lib/my97date/WdatePicker.js"></script>
+		<script src="/statics/admin/js/admin_export/data_table_body.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('load', {
+					name: $('#name').val(),
+					starttime: $("#starttime").val(),
+					endtime: $("#endtime").val(),
+					title: $('#title').val(),
+					included: $('#included').val()
+				});
+			}
+			$(function() {
+				var today = new Date();
+				$("#starttime").val(today.Format("YYYY-MM-DD"));
+				$("#endtime").val(today.Format("YYYY-MM-DD"));
+				var oldStarttime = $("#starttime").val();
+				var oldEndtime = $("#endtime").val();
+				$("#starttime").focus(function() {
+					WdatePicker({
+						dateFmt: 'yyyy-MM-dd',
+						opposite: true,
+					});
+				});
+				$("#endtime").focus(function() {
+					WdatePicker({
+						dateFmt: 'yyyy-MM-dd',
+						opposite: true,
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="window"></div>
+		<div class="main">
+			<div>
+				<form action="/Admin_Export/get_list/" method="post">
+					<label>
+						<span>请选择生成时间段：</span>
+						<input id="starttime" name="starttime" style="width:150px;" readonly="readonly">
+						<button class="easyui-linkbutton">一键生成TXT</button>
+					</label>
+				</form>
+				<form action="/Admin_Export/get_list/" method="post">
+					<label>
+						<span>请选择下载时间段：</span>
+						<input id="endtime" name="starttime" style="width:150px;" readonly="readonly">
+						<input type="hidden" name="type" value="zip" />
+						<button class="easyui-linkbutton">一键ZIP下载</button>
+					</label>
+				</form>
+			</div>
+			<div id="data_table" style="float: left;">
+				<!--<table id="data_table_body">-->
+
+				<!--</table>-->
+			</div>
+		</div>
+	</body>
+
+</html>

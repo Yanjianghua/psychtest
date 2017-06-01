@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>后台系统</title>
+		{{include file='../../common/importAll.html'}}
+		<script>
+			function FindData() {
+				$('#data_table_body').datagrid('reload', {
+					name: $('#name').val(),
+				});
+			}
+		</script>
+	</head>
+
+	<body class="easyui-layout">
+		<div id="window"></div>
+		<div class="main">
+			<div>
+				<form name="searchform" method="post" action="" id="searchform">
+					<input type="text" name="name" class="easyui-searchbox" id="name" style="width:200px" data-options="prompt:'请输入敏感词'" >
+					<a href="javascript:FindData()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+				</form>
+			</div>
+			<div id="data_table" style="float: left;">
+				<table id="data_table_body">
+
+				</table>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$('#data_table_body').datagrid({
+				singleSelect: true,
+				ctrlSelect: true,
+				pagination: true,
+				pageSize: 10,
+				url: "/Admin_Sensitive/get_list/",
+				width:1000,
+				pagination: true,
+				columns: [
+					[{
+						field: 'id',
+						title: 'ID',
+						width: "100",
+						align: 'center'
+					}, {
+						field: 'name',
+						title: '敏感词名称',
+						width: "160",
+						align: 'center'
+					}]
+				],
+				toolbar: [{
+					iconCls: "icon-add",
+					text: "添加敏感词",
+					id: "add",
+					enable: true,
+					handler: function() {
+						$("#window").window({
+							title: "添加敏感词",
+							width: 600,
+							height: 400,
+							closed: true,
+							minimizable: false,
+							maximizable: false,
+							collapsible: false,
+							href: "/Admin_Sensitive/add/",
+							doSize: true,
+							modal: true
+						}).window("open");
+					}
+				}, {
+					text: "删除",
+					iconCls: 'icon-cancel',
+					handler: function() {
+						var row = $("#data_table_body").datagrid("getSelected");
+						$.post("/Admin_Sensitive/del/?id=" + row.id, {
+							id: row.id
+						}, function(response) {
+							if (response.success) {
+								$("#data_table_body").datagrid("load");
+							} else {
+								alert(response.msg);
+							}
+						});
+					}
+				}, {
+					text: "生成文件",
+					iconCls: 'icon-add',
+					handler: function() {
+						$.post("/Admin_Sensitive/fileput/", {
+
+						}, function(response) {
+							alert(response.msg);
+						});
+					}
+				}]
+			});
+		</script>
+
+	</body>
+
+</html>

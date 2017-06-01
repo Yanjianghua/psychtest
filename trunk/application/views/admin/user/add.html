@@ -1,0 +1,74 @@
+<form method="post" enctype="multipart/form-data" id="form" style="line-height: 40px; padding: 10px;">
+	<input type="hidden" name="id" value="{{$id}}" />
+	<div>
+		<label>用户名:</label>
+		<input id="username" name="username" value="" />
+	</div>
+	<div>
+		<label>姓&nbsp;&nbsp;&nbsp;名:</label>
+		<input id="truename" name="truename" value="" />
+	</div>
+	<div>
+		<label>密&nbsp;&nbsp;&nbsp;码:</label>
+		<input id="password" name="password" value="" />
+	</div>
+	<div>
+		<div id="button">生成密码</div>
+	</div>
+	<div>
+		<div id="submit">提交</div>
+	</div>
+</form>
+<script src="/statics/admin/js/users/ad.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	adAdd(function() {
+		var truename = $.trim($("#truename").val());
+		var username = $.trim($("#username").val());
+		var password = $.trim($("#password").val());
+		if (truename == "") {
+			alert("姓名不能为空");
+			return false;
+		}
+		if (username == "") {
+			alert("用户名不能为空");
+			return false;
+		}
+		if (password == "") {
+			alert("密码不能为空");
+			return false;
+		}
+	}, function() {
+		$("#truename").textbox({
+			width: "30%",
+			prompt: "请输入姓名",
+			type: "text"
+		});
+		$('#username').textbox({
+			width: "30%",
+			prompt: "请输入用户名",
+			type: "text"
+		});
+		$('#password').textbox({
+			width: "30%",
+			prompt: "自动生成",
+			type: "text"
+		});
+		$("#submit").linkbutton({
+			iconCls: 'icon-ok'
+		}).click(function() {
+			$('#form').submit();
+		});
+	});
+	$("#button").linkbutton({
+		iconCls: 'icon-ok'
+	}).click(function() {
+		$.post("/Admin_User/create_password/", {
+
+				}, function(data) {
+					if (data.success) {
+						$("#data_table_body").datagrid("reload");
+					}
+					$("#password").textbox('setValue', data);
+				});
+	});
+</script>

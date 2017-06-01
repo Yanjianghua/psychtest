@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>后台系统</title>
+		{{include file='../../common/importAll.html'}}
+	</head>
+
+	<body>
+	<div id="window"></div>
+	<div class="main">
+		<div id="data_table" style="float: left;">
+			<table id="data_table_body">
+
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$('#data_table_body').treegrid({
+			singleSelect: true,
+			ctrlSelect: true,
+			url: "/Admin_Menu/get_list/",
+			idField: 'id',
+			treeField: 'name',
+			width: 1000,
+			height:600,
+			columns: [
+				[{
+					field: 'id',
+					title: 'ID',
+					width: "80"
+				}, {
+					field: 'name',
+					title: '菜单名称',
+					width: "160"
+				}, {
+					field: 'controller',
+					title: '控制器名',
+					width: "160"
+				}, {
+					field: 'method',
+					title: '方法名',
+					width: "120"
+				}, {
+					field: 'hide',
+					title: '是否隐藏',
+					width: "80",
+					formatter: function(value) {
+						if (value == "{{Menu_model::HIDE_YES}}") {
+							return "<span style='color:red;'>是</span>";
+						} else if (value == "{{Menu_model::HIDE_NO}}") {
+							return "否"
+						} else {
+							return "未知";
+						}
+					}
+				}, {
+					field: 'built',
+					title: '内置菜单',
+					width: "80",
+					formatter: function(value) {
+						if (value == "{{Menu_model::HIDE_YES}}") {
+							return "<span style='color:red;'>是</span>";
+						} else if (value == "{{Menu_model::HIDE_NO}}") {
+							return "否"
+						} else {
+							return "未知";
+						}
+					}
+				}]
+			],
+			toolbar: [{
+				iconCls: "icon-add",
+				text: "添加菜单",
+				id: "add",
+				enable: true,
+				handler: function() {
+					$("#window").window({
+						title: "添加菜单",
+						width: 800,
+						height: 500,
+						closed: true,
+						minimizable: false,
+						maximizable: false,
+						collapsible: false,
+						href: "/Admin_Menu/add/",
+						doSize: true,
+						modal: true
+					}).window("open");
+				}
+			}, {
+				iconCls: "icon-edit",
+				text: "修改菜单",
+				id: "edit",
+				enable: true,
+				handler: function() {
+					$("#window").window({
+						title: "修改菜单",
+						width: 800,
+						height: 500,
+						closed: true,
+						minimizable: false,
+						maximizable: false,
+						collapsible: false,
+						href: "/Admin_Menu/edit/?id=" + $("#data_table_body").datagrid("getSelected").id,
+						doSize: true,
+						modal: true
+					}).window("open");
+				}
+			}, {
+				text: "删除",
+				iconCls: 'icon-cancel',
+				handler: function() {
+					var row = $("#data_table_body").datagrid("getSelected");
+					$.post("/Admin_Menu/del/?id=" + row.id, {
+						id: row.id
+					}, function(response) {
+						if (response.success) {
+							$("#data_table_body").datagrid("load");
+						} else {
+							alert(response.msg);
+						}
+					});
+				}
+			}]
+		});
+	</script>
+	</body>
+</html>

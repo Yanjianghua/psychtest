@@ -1,0 +1,101 @@
+<form method="post" id="form" class="myform" style="padding: 10px;">
+    <input type="hidden" name="rid" value="{{$id}}" />
+    <table id="dg1"></table>
+    <script type="text/javascript">
+        $('#dg1').treegrid({
+            singleSelect: false,
+            url: "/Admin_Roles/get_per_list/?id={{$id}}",
+            idField: 'id',
+            treeField: 'name',
+            onLoadSuccess: function(a, b) {
+                var f = function(list) {
+                    for (var k in list) {
+                        if (list[k].checked) {
+                            $('#dg1').treegrid('checkRow', list[k].id);
+                        }
+                        if (typeof list[k]['children'] != "undefined") {
+                            f(list[k]['children']);
+                        }
+                    }
+                }
+                f(b);
+            },
+            onCheck: function(row) {
+                if (typeof row.children != "undefined") {
+                    for(var k in row.children){
+                        $('#dg1').treegrid('checkRow', row.children[k].id);
+                    }
+                }
+            },
+            onUncheck: function(row) {
+                if (typeof row.children != "undefined") {
+                    for(var k in row.children){
+                        $('#dg1').treegrid('uncheckRow', row.children[k].id);
+                    }
+                }
+            },
+            columns: [
+                [{
+                    field: 'id',
+                    title: '选择',
+                    width: "10%",
+                    checkbox: true
+                }, {
+                    field: 'name',
+                    title: '菜单名称',
+                    width: "20%",
+
+                }, {
+                    field: 'controller',
+                    title: '控制器名',
+                    width: "20%"
+                }, {
+                    field: 'method',
+                    title: '方法名',
+                    width: "20%"
+                }, {
+                    field: 'hide',
+                    title: '是否隐藏',
+                    width: "10%",
+                    formatter: function(value) {
+                        if (value == "{{Menu_model::HIDE_YES}}") {
+                            return "<span style='color:red;'>是</span>";
+                        } else if (value == "{{Menu_model::HIDE_NO}}") {
+                            return "否"
+                        } else {
+                            return "未知";
+                        }
+                    }
+                }]
+            ]
+        });
+    </script>
+    <div class="row">
+        <input type="submit" value="提交">
+    </div>
+</form>
+
+<script type="text/javascript">
+    var row = $("#data_table_body").datagrid("getSelected");
+    $("#form").form("reset");
+    $('#form').form({
+        url: "/Admin_Roles/per/",
+        onSubmit: function(parme) {
+            var ids = [];
+            var ck = $("#dg1").datagrid("getChecked");
+            for (var k in ck) {
+                ids.push(ck[k].id);
+            }
+            parme.pid = ids;
+        },
+        success: function(data) {
+            data = JSON.parse(data);
+            if (data && data.success) {
+                $("#window").window("close");
+                $("#data_table_body").datagrid("load");
+            } else {
+                alert(data.msg);
+            }
+        }
+    });
+</script>
